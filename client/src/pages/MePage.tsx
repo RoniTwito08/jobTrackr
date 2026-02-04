@@ -91,7 +91,7 @@ export default function MePage() {
 
   const handleUpdateApplicationStatus = async (
     id: string,
-    newStatus: "applied" | "rejected" | "accepted" | "pending",
+    newStatus: "applied" | "rejected" | "accepted" | "pending" | "interview",
   ) => {
     try {
       const res = await api.put(`/jobs/${id}`, { status: newStatus });
