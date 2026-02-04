@@ -7,14 +7,21 @@
       "dev": "npx tsx watch src/server.ts"
    },
    "dependencies": {
+      "@sendgrid/mail": "^8.1.6",
+      "@types/nodemailer": "^7.0.9",
+      "@types/passport-google-oauth20": "^2.0.17",
       "bcrypt": "^6.0.0",
       "cookie-parser": "^1.4.7",
       "cors": "^2.8.6",
       "crypto": "^1.0.1",
       "dotenv": "^17.2.3",
       "express": "^4.17.21",
+      "google-auth-library": "^10.5.0",
       "jsonwebtoken": "^9.0.3",
       "mongoose": "^9.1.5",
+      "nodemailer": "^8.0.0",
+      "passport": "^0.7.0",
+      "passport-google-oauth20": "^2.0.0",
       "zod": "^4.3.6"
    },
    "devDependencies": {

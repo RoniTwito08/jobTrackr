@@ -7,7 +7,7 @@ import { RegisterInput } from "../validators/auth.validators";
 import { LoginInput } from "../validators/auth.validators";
 import refreshTokenModel from "../models/refreshToken.model";
 
-export async function register({ email, userName, password }: RegisterInput) {
+export async function register({ email, firstName, lastName, password }: RegisterInput) {
   const existingUser = await userModel.findOne({ email });
   if (existingUser) {
     throw new ApiError(409, "User already exists");
@@ -16,14 +16,16 @@ export async function register({ email, userName, password }: RegisterInput) {
 
   const user = await userModel.create({
     email,
-    userName,
+    firstName,
+    lastName,
     passwordHash,
   });
 
   return {
     id: user._id,
     email: user.email,
-    userName: user.userName,
+    firstName: user.firstName,
+    lastName: user.lastName,
     createdAt: user.createdAt,
   };
 }

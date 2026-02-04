@@ -45,7 +45,10 @@ export const loginController = async (
     if (!result.success) {
       return res.status(400).json({
         message: "validation error",
-        errors: result.error.issues,
+        errors: result.error.issues.map((issue) => ({
+          field: issue.path.join("."),
+          message: issue.message,
+        })),
       });
     }
     const { accessToken, refreshToken } = await login(result.data);
@@ -69,7 +72,7 @@ export const meController = async (
 
     const user = await userModel
       .findById(req.user.userId)
-      .select("_id email userName createdAt");
+      .select("_id email firstName lastName createdAt");
     if (!user) {
       throw new ApiError(401, "Unauthorized");
     }
@@ -77,7 +80,8 @@ export const meController = async (
     return res.status(200).json({
       id: user._id,
       email: user.email,
-      userName: user.userName,
+      firstName: user.firstName,
+      lastName: user.lastName,
       createdAt: user.createdAt,
     });
   } catch (err) {

@@ -1,0 +1,140 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 16px;
+}
+
+.form {
+  width: min(500px, 95vw);
+  background: rgba(12, 16, 32, 0.95);
+  border: 1px solid rgba(110, 180, 255, 0.2);
+  backdrop-filter: blur(16px);
+  border-radius: 18px;
+  padding: 24px;
+  box-shadow: 0 20px 80px rgba(0, 0, 0, 0.6);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.header h2 {
+  font-size: 20px;
+  margin: 0;
+  color: #e6f0ff;
+}
+
+.closeBtn {
+  background: none;
+  border: none;
+  color: #a9b7d0;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.closeBtn:hover {
+  color: #e6f0ff;
+}
+
+.field {
+  display: grid;
+  gap: 6px;
+  margin-bottom: 14px;
+}
+
+.field label {
+  font-size: 12px;
+  color: #8ea3c7;
+  font-weight: 500;
+}
+
+.field input,
+.field select {
+  background: rgba(10, 14, 28, 0.8);
+  border: 1px solid rgba(120, 170, 255, 0.2);
+  color: #e6f0ff;
+  border-radius: 10px;
+  padding: 10px;
+  font-size: 14px;
+  outline: none;
+  transition: border 0.2s, box-shadow 0.2s;
+}
+
+.field input::placeholder {
+  color: rgba(169, 183, 208, 0.5);
+}
+
+.field input:focus,
+.field select:focus {
+  border-color: #66c2ff;
+  box-shadow: 0 0 0 3px rgba(102, 194, 255, 0.15);
+}
+
+.error {
+  background: rgba(255, 70, 90, 0.1);
+  border: 1px solid rgba(255, 70, 90, 0.3);
+  color: #ff8fa0;
+  padding: 8px 10px;
+  border-radius: 8px;
+  font-size: 12px;
+  margin-bottom: 12px;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.cancelBtn {
+  flex: 1;
+  background: transparent;
+  border: 1px solid rgba(120, 170, 255, 0.3);
+  color: #cfe1ff;
+  border-radius: 10px;
+  padding: 10px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.cancelBtn:hover {
+  border-color: rgba(120, 170, 255, 0.5);
+  background: rgba(120, 170, 255, 0.05);
+}
+
+.submitBtn {
+  flex: 1;
+  background: linear-gradient(135deg, #4f86ff, #39d0ff);
+  color: #071018;
+  border: none;
+  border-radius: 10px;
+  padding: 10px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.2s ease;
+}
+
+.submitBtn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(73, 157, 255, 0.35);
+}
+
+.submitBtn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
