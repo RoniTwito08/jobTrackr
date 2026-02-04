@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import authRouter from "./routes/auth.routes";
+import cookieParser from "cookie-parser";
 
 dotenv.config();
 const BASE_URL = process.env.BASE_URL;
@@ -28,6 +29,7 @@ app.use(
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 app.use("/auth", authRouter);
 
 export default app;

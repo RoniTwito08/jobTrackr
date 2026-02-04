@@ -7,6 +7,8 @@ import { refreshCookieOptions } from "../utils/cookies";
 import { AuthRequest } from "../middlewares/auth.middleware";
 import ApiError from "../utils/ApiError";
 import userModel from "../models/user.model";
+import jwt from "jsonwebtoken";
+import refreshTokenModel from "../models/refreshToken.model";
 
 export const registerController = async (
   req: Request,
@@ -48,7 +50,7 @@ export const loginController = async (
     }
     const { accessToken, refreshToken } = await login(result.data);
 
-    res.cookie("refresToken", refreshToken, refreshCookieOptions);
+    res.cookie("refreshToken", refreshToken, refreshCookieOptions);
     return res.status(200).json({ accessToken });
   } catch (err) {
     next(err);
@@ -78,6 +80,70 @@ export const meController = async (
       userName: user.userName,
       createdAt: user.createdAt,
     });
+  } catch (err) {
+    next(err);
+  }
+};
+export const refreshController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const refreshToken = req.cookies?.refreshToken;
+
+    if (!refreshToken) {
+      throw new ApiError(401, "Refresh token missing");
+    }
+
+    const storedToken = await refreshTokenModel.findOne({
+      token: refreshToken,
+    });
+    if (!storedToken) {
+      throw new ApiError(401, "Invalid refresh token");
+    }
+
+    if (storedToken.expiresAt < new Date()) {
+      await storedToken.deleteOne();
+      throw new ApiError(401, "Refresh token expired");
+    }
+
+    const user = await userModel.findById(storedToken.userId);
+    if (!user) {
+      throw new ApiError(401, "User not found");
+    }
+
+    if (!process.env.JWT_SECRET) {
+      throw new Error("JWT_SECRET is not defined");
+    }
+
+    const secret = process.env.JWT_SECRET;
+    const payload = { userId: user._id.toString(), email: user.email };
+    const expiresIn = (process.env.JWT_EXPIRES_IN ??
+      "1h") as jwt.SignOptions["expiresIn"];
+    const options: jwt.SignOptions = { expiresIn };
+    const accessToken = jwt.sign(payload, secret, options);
+
+    return res.status(200).json({ accessToken });
+  } catch (err) {
+    next(err);
+  }
+};
+export const logoutController = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const refreshToken = req.cookies?.refreshToken;
+
+    if (refreshToken) {
+      await refreshTokenModel.deleteOne({ token: refreshToken });
+    }
+
+    res.clearCookie("refreshToken", refreshCookieOptions);
+
+    return res.status(200).json({ message: "Logged out successfully" });
   } catch (err) {
     next(err);
   }
