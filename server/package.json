@@ -4,7 +4,8 @@
    "description": "",
    "main": "index.js",
    "scripts": {
-      "dev": "npx tsx watch src/server.ts"
+      "dev": "npx tsx watch src/server.ts",
+      "start": "npx tsx src/server.ts"
    },
    "dependencies": {
       "@sendgrid/mail": "^8.1.6",
