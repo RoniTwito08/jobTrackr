@@ -1,183 +1,317 @@
-🚀 JobTrackr
-JobTrackr is a full-stack job application tracker that helps job seekers organize, manage, and monitor their job applications in one centralized platform.
+# 🚀 JobTrackr
 
-The goal of the system is to help job seekers stay organized during their job search, track application status, and gain insights into their progress without manual spreadsheet management.
+**A production-ready full-stack job application tracking platform built with React, TypeScript, Node.js, and MongoDB.**
 
-✨ Key Features
-📋 Add and manage job applications
-🔍 Search applications by company name
-📊 Track application status (applied, pending, interview, accepted, rejected)
-🧮 View progress statistics and metrics
-🔗 Duplicate application checker by URL
-📄 Pagination for easy navigation through applications
-🔐 Secure authentication with JWT tokens
-🌐 Google OAuth sign-in support
-🔄 Refresh token mechanism for session persistence
-💪 Strong password validation requirements
+JobTrackr helps job seekers organize and manage their entire job search from one centralized dashboard — replacing spreadsheets and manual tracking with structured application management, analytics, search, and secure authentication.
 
-🧩 System Overview
-User registers with email and password or signs in with Google
-Dashboard displays job applications and progress metrics
-User can add new job applications with company name and URL
-System tracks application status and interview progress
-Search and filter applications by company name
-View detailed statistics on applications, interviews, and outcomes
-Duplicate detection prevents duplicate applications for the same job URL
-Automatic session refresh keeps user logged in
+🌐 **[Live Demo](https://thejobtrackr.netlify.app)**
 
-🧱 Tech Stack
-Frontend
+## ✨ Key Features
 
-React 18
-TypeScript
-Vite (Build tool)
-React Router v6
-Axios with JWT interceptors
-@react-oauth/google (Google Sign-In)
-CSS Modules with glassmorphic design
-Netlify (Deployed)
+* 📋 **Application Management** — Create, update, and manage job applications.
+* 🔄 **Status Tracking** — Track applications through applied, pending, interview, accepted, and rejected stages.
+* 📊 **Analytics Dashboard** — View statistics and progress across the job search.
+* 🔍 **Search & Filtering** — Quickly find applications by company name.
+* 🔗 **Duplicate Detection** — Prevent duplicate applications using job URLs.
+* 📄 **Pagination** — Efficiently navigate larger application histories.
+* 🔐 **JWT Authentication** — Secure access-token based authentication.
+* 🔄 **Refresh Tokens** — Automatically maintain authenticated sessions.
+* 🌐 **Google OAuth 2.0** — Sign in using a Google account.
+* ✅ **Schema Validation** — Validate incoming data using Zod.
 
-Backend
+## 🔄 How It Works
 
-Node.js
-Express.js
-TypeScript
-MongoDB + Mongoose ODM
-JWT Authentication with Refresh Tokens
-Google Auth Library for OAuth 2.0
-Zod for schema validation
-Render (Deployed)
+```text
+Register / Google Sign-In
+          ↓
+       Dashboard
+          ↓
+   Add Application
+          ↓
+Track Application Status
+          ↓
+ Interviews & Outcomes
+          ↓
+   Progress Analytics
+```
 
-Database
+Users can register using email and password or authenticate through Google.
 
-MongoDB Atlas (Cloud database)
+Once authenticated, the dashboard provides a centralized view of applications, their current status, interview progress, and overall job-search statistics.
 
-Integrations
+## 🧱 Tech Stack
 
-Google OAuth 2.0 (Social authentication)
+### Frontend
 
-🎯 What This Project Demonstrates
-Full-stack MERN application development
-JWT-based authentication and token refresh mechanisms
-OAuth 2.0 integration with Google
-RESTful API design with proper error handling
-MongoDB schema design and aggregation
-Frontend state management and API integration
-Responsive UI with modern CSS techniques (glassmorphism)
-Production deployment workflow (Render + Netlify + MongoDB Atlas)
-Environment variable management and secrets security
-TypeScript for type safety across full stack
+* React 18
+* TypeScript
+* Vite
+* React Router
+* Axios
+* Google OAuth
+* CSS Modules
 
-📌 Status
-This project is fully functional and deployed to production. Active features include user authentication, job application management, search, and analytics.
+### Backend
 
-Live Demo
-🌐 Frontend: https://thejobtrackr.netlify.app
-⚙️ Backend API: https://jobtrackr-api-rldd.onrender.com
+* Node.js
+* Express
+* TypeScript
+* Zod
 
-🧪 How to Run Locally
+### Database
 
-Prerequisites
-Node.js 20+
-MongoDB (local or Atlas connection string)
-Google OAuth credentials (optional, for Google sign-in)
+* MongoDB
+* Mongoose
+* MongoDB Atlas
 
-Clone the repository
+### Authentication
+
+* JWT Access Tokens
+* Refresh Tokens
+* Google OAuth 2.0
+* Password validation
+
+### Deployment
+
+* **Frontend:** Netlify
+* **Backend:** Render
+* **Database:** MongoDB Atlas
+
+## 🏗️ Architecture
+
+JobTrackr follows a full-stack client-server architecture:
+
+```text
+React + TypeScript
+        ↓
+     REST API
+        ↓
+Node.js + Express
+        ↓
+ ┌───────────────┬───────────────┐
+ ↓               ↓               ↓
+MongoDB      JWT Auth       Google OAuth
+```
+
+The React frontend communicates with the Express REST API through Axios.
+
+Authentication is handled using short-lived access tokens together with refresh tokens, while Google OAuth provides an alternative authentication flow.
+
+Persistent application and user data is stored in MongoDB.
+
+## 🔐 Authentication Flow
+
+Authentication was designed around access and refresh tokens rather than a single long-lived JWT.
+
+```text
+Login / Google OAuth
+        ↓
+Access Token + Refresh Token
+        ↓
+Authenticated API Request
+        ↓
+Access Token Expires
+        ↓
+Refresh Request
+        ↓
+New Access Token
+        ↓
+Original Request Continues
+```
+
+Axios interceptors on the frontend handle authenticated requests and token refresh behavior.
+
+This allows users to remain signed in while keeping access tokens short-lived.
+
+## 📊 Application Tracking
+
+Each application can progress through several stages:
+
+```text
+Applied
+   ↓
+Pending
+   ↓
+Interview
+   ↓
+Accepted / Rejected
+```
+
+The dashboard aggregates application data to provide statistics about the user's job-search progress.
+
+## 🔗 Duplicate Detection
+
+Before creating a new application, JobTrackr can check whether the same job URL has already been added.
+
+```http
+GET /jobs/check?url=...
+```
+
+This prevents users from accidentally applying to or tracking the same position multiple times.
+
+## 💡 What This Project Demonstrates
+
+JobTrackr goes beyond basic CRUD functionality and demonstrates:
+
+* **Full-stack TypeScript development**
+* **RESTful API design**
+* **JWT authentication architecture**
+* **Refresh-token session management**
+* **Google OAuth 2.0 integration**
+* **Schema validation with Zod**
+* **MongoDB schema design**
+* **Frontend/backend integration**
+* **API error handling**
+* **Production deployment**
+* **Environment and secrets management**
+
+The project demonstrates the complete lifecycle of building and deploying a modern full-stack web application.
+
+## 🌐 Deployment
+
+JobTrackr is deployed and publicly accessible.
+
+**Frontend**
+[thejobtrackr.netlify.app](https://thejobtrackr.netlify.app)
+
+**Backend API**
+[jobtrackr-api-rldd.onrender.com](https://jobtrackr-api-rldd.onrender.com)
+
+> The backend is hosted on Render and may require a short startup period after inactivity.
+
+## 📂 Project Structure
+
+```text
+jobTrackr/
+├── client/
+│   ├── src/
+│   │   ├── auth/           # Authentication
+│   │   ├── pages/          # Application pages
+│   │   ├── components/     # Reusable UI
+│   │   ├── api/            # Axios configuration
+│   │   └── assets/
+│   └── vite.config.ts
+│
+├── server/
+│   ├── src/
+│   │   ├── controllers/    # Request handlers
+│   │   ├── services/       # Business logic
+│   │   ├── models/         # MongoDB schemas
+│   │   ├── routes/         # API routes
+│   │   ├── middlewares/    # Authentication & CORS
+│   │   ├── validators/     # Zod schemas
+│   │   └── utils/
+│   └── package.json
+│
+└── README.md
+```
+
+## 🔑 API Overview
+
+### Authentication
+
+| Method | Endpoint         | Description                |
+| ------ | ---------------- | -------------------------- |
+| `POST` | `/auth/register` | Register a new user        |
+| `POST` | `/auth/login`    | Authenticate a user        |
+| `POST` | `/auth/google`   | Authenticate with Google   |
+| `GET`  | `/auth/me`       | Get the authenticated user |
+| `POST` | `/auth/refresh`  | Refresh an access token    |
+| `POST` | `/auth/logout`   | End the current session    |
+
+### Job Applications
+
+| Method   | Endpoint              | Description                     |
+| -------- | --------------------- | ------------------------------- |
+| `GET`    | `/jobs`               | Get user applications           |
+| `POST`   | `/jobs`               | Create an application           |
+| `PUT`    | `/jobs/:id`           | Update an application           |
+| `DELETE` | `/jobs/:id`           | Delete an application           |
+| `GET`    | `/jobs/check?url=...` | Check for duplicate application |
+
+## 🚀 Running Locally
+
+### Prerequisites
+
+* Node.js 20+
+* MongoDB or MongoDB Atlas
+* Google OAuth credentials *(optional)*
+
+### Clone
+
 ```bash
 git clone https://github.com/RoniTwito08/jobTrackr.git
 cd jobTrackr
 ```
 
-Setup Backend
+### Backend
+
 ```bash
 cd server
 npm install
 ```
 
-Create a `.env` file in the server folder:
-```
+Create `server/.env`:
+
+```env
 PORT=3000
 MONGO_URI=mongodb://localhost:27017/jobTrackr
-JWT_SECRET=your-secret-key-here
+JWT_SECRET=your-secret-key
 JWT_EXPIRES_IN=1h
+
 GOOGLE_CLIENT_ID=your-google-client-id
 GOOGLE_CLIENT_SECRET=your-google-client-secret
 GOOGLE_CALLBACK_URL=http://localhost:3000/auth/google/callback
+
 BASE_URL=http://localhost:5173
 FRONTEND_URL=http://localhost:5173
 ```
 
-Run the backend:
+Start the server:
+
 ```bash
 npm run dev
 ```
 
-Setup Frontend
+### Frontend
+
 ```bash
 cd client
 npm install
 ```
 
-Create a `.env.development` file in the client folder (optional, defaults to localhost):
-```
+Create `client/.env.development` if needed:
+
+```env
 VITE_API_URL=http://localhost:3000
 VITE_GOOGLE_CLIENT_ID=your-google-client-id
 ```
 
-Run the frontend:
+Start the application:
+
 ```bash
 npm run dev
 ```
 
-The app will be available at `http://localhost:5173`
+The frontend will be available at `http://localhost:5173`.
 
-📂 Project Structure
-```
-jobTrackr/
-├── client/                 # React frontend
-│   ├── src/
-│   │   ├── auth/          # Authentication pages (Login, Register)
-│   │   ├── pages/         # Main dashboard page
-│   │   ├── components/    # Reusable components
-│   │   ├── api/           # Axios configuration
-│   │   └── assets/        # Images and assets
-│   └── vite.config.ts
-├── server/                # Express backend
-│   ├── src/
-│   │   ├── controllers/   # Route handlers
-│   │   ├── services/      # Business logic
-│   │   ├── models/        # MongoDB schemas
-│   │   ├── routes/        # API routes
-│   │   ├── middlewares/   # Auth and CORS
-│   │   ├── validators/    # Zod schemas
-│   │   └── utils/         # Helper functions
-│   └── package.json
-└── README.md
-```
+## 🎨 UI
 
-🔑 API Endpoints
+The application includes:
 
-Authentication
-- `POST /auth/register` - Register new user
-- `POST /auth/login` - Login user
-- `POST /auth/google` - Google OAuth login
-- `GET /auth/me` - Get current user
-- `POST /auth/refresh` - Refresh access token
-- `POST /auth/logout` - Logout user
+* Responsive desktop and mobile layouts
+* Glassmorphic interface
+* Application status indicators
+* Real-time search
+* Dashboard statistics
+* Smooth UI interactions
 
-Job Applications
-- `GET /jobs` - Get all user applications
-- `POST /jobs` - Create new application
-- `PUT /jobs/:id` - Update application status
-- `DELETE /jobs/:id` - Delete application
-- `GET /jobs/check?url=...` - Check if URL already applied
+## 📌 Status
 
-🎨 Design Features
-Glassmorphic UI design with modern aesthetics
-Responsive layout that works on desktop and mobile
-Gradient backgrounds and smooth animations
-Real-time search filtering
-Intuitive status badges with color coding
+**Fully functional and deployed.**
 
-📝 License
-This project is available on GitHub at https://github.com/RoniTwito08/jobTrackr
+The production version includes authentication, Google sign-in, application management, status tracking, duplicate detection, search, and analytics.
+
+---
+
+**Built with React, TypeScript, Node.js, Express and MongoDB.**
